@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { 
   MessageSquare, 
@@ -392,6 +391,24 @@ const clubs = [
     description: "Prepare for your professional journey with workshops, mentoring, and networking events.",
     members: 198,
     icon: CalendarDays
+  }
+];
+
+const features = [
+  {
+    title: "Discussion Forums",
+    description: "Engage in meaningful conversations with peers and faculty members.",
+    icon: MessageSquare
+  },
+  {
+    title: "Club Activities",
+    description: "Join and participate in various university clubs and societies.",
+    icon: Users
+  },
+  {
+    title: "Event Calendar",
+    description: "Stay updated with upcoming events, deadlines, and activities.",
+    icon: Calendar
   }
 ];
 
