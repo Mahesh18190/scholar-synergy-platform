@@ -1,6 +1,6 @@
-
 import { Button } from "@/components/ui/button";
 import { MessageSquare, Users, Calendar, GraduationCap, Bell } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   return (
@@ -16,6 +16,7 @@ const Index = () => {
             <div className="hidden md:flex space-x-6">
               <a href="#features" className="text-gray-600 hover:text-primary transition-colors">Features</a>
               <a href="#announcements" className="text-gray-600 hover:text-primary transition-colors">Announcements</a>
+              <Link to="/forums" className="text-gray-600 hover:text-primary transition-colors">Forums</Link>
               <a href="#clubs" className="text-gray-600 hover:text-primary transition-colors">Clubs</a>
               <a href="#events" className="text-gray-600 hover:text-primary transition-colors">Events</a>
             </div>
