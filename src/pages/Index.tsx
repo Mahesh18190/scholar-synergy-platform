@@ -1,5 +1,19 @@
+
 import { Button } from "@/components/ui/button";
-import { MessageSquare, Users, Calendar, GraduationCap, Bell } from "lucide-react";
+import { 
+  MessageSquare, 
+  Users, 
+  Calendar, 
+  GraduationCap, 
+  Bell, 
+  BookOpen,
+  Clock,
+  ClipboardList,
+  UserPlus,
+  CalendarDays,
+  User,
+  Megaphone
+} from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Index = () => {
@@ -18,11 +32,14 @@ const Index = () => {
               <a href="#announcements" className="text-gray-600 hover:text-primary transition-colors">Announcements</a>
               <Link to="/forums" className="text-gray-600 hover:text-primary transition-colors">Forums</Link>
               <a href="#clubs" className="text-gray-600 hover:text-primary transition-colors">Clubs</a>
-              <a href="#events" className="text-gray-600 hover:text-primary transition-colors">Events</a>
+              <a href="#timetable" className="text-gray-600 hover:text-primary transition-colors">Timetable</a>
             </div>
             <div className="flex items-center space-x-4">
-              <Button variant="outline" className="hidden md:inline-flex">Sign In</Button>
-              <Button className="bg-primary hover:bg-primary-600 text-white">Get Started</Button>
+              <Button variant="outline" size="sm">
+                <Bell className="h-4 w-4 mr-2" />
+                <span className="hidden md:inline">Notifications</span>
+              </Button>
+              <Button>Get Started</Button>
             </div>
           </div>
         </div>
@@ -70,23 +87,131 @@ const Index = () => {
       </section>
 
       {/* Announcements Section */}
-      <section id="announcements" className="py-20 px-4 bg-primary-100">
+      <section id="announcements" className="py-20 px-4 bg-white">
         <div className="container mx-auto">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-12">
-            Latest Announcements
+            Important Announcements
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {announcements.map((announcement, index) => (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2 space-y-6">
+              {announcements.map((announcement) => (
+                <div 
+                  key={announcement.id}
+                  className="p-6 rounded-xl bg-white border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
+                >
+                  <div className="flex items-start space-x-4">
+                    <div className={`p-2 rounded-lg ${announcement.categoryColor}`}>
+                      <announcement.icon className="h-6 w-6 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${announcement.categoryBadge} mb-2`}>
+                        {announcement.category}
+                      </span>
+                      <h3 className="text-lg font-semibold mb-2">{announcement.title}</h3>
+                      <p className="text-gray-600 mb-3">{announcement.description}</p>
+                      <div className="flex items-center text-sm text-gray-500">
+                        <Clock className="h-4 w-4 mr-1" />
+                        <span>{announcement.date}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="space-y-6">
+              <div className="p-6 rounded-xl bg-primary-100 border border-primary-200">
+                <h3 className="font-semibold mb-4">Quick Actions</h3>
+                <div className="space-y-3">
+                  <Button variant="outline" className="w-full justify-start">
+                    <Bell className="h-4 w-4 mr-2" />
+                    Notification Settings
+                  </Button>
+                  <Button variant="outline" className="w-full justify-start">
+                    <BookOpen className="h-4 w-4 mr-2" />
+                    Course Updates
+                  </Button>
+                  <Button variant="outline" className="w-full justify-start">
+                    <Calendar className="h-4 w-4 mr-2" />
+                    Event Calendar
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Timetable Preview Section */}
+      <section id="timetable" className="py-20 px-4 bg-primary-100">
+        <div className="container mx-auto">
+          <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-12">
+            Your Schedule at a Glance
+          </h2>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2">
+              <div className="bg-white rounded-xl shadow-sm p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {todayClasses.map((class_) => (
+                    <div key={class_.id} className="p-4 rounded-lg border border-gray-200 hover:border-primary transition-colors">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-semibold text-primary">{class_.time}</span>
+                        <span className="text-sm text-gray-500">{class_.duration}</span>
+                      </div>
+                      <h4 className="font-medium mb-1">{class_.subject}</h4>
+                      <p className="text-sm text-gray-600">{class_.location}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="space-y-6">
+              <div className="bg-white rounded-xl shadow-sm p-6">
+                <h3 className="font-semibold mb-4">Upcoming Events</h3>
+                <div className="space-y-4">
+                  {upcomingEvents.map((event) => (
+                    <div key={event.id} className="flex items-start space-x-3">
+                      <div className="bg-primary-100 rounded-lg p-2">
+                        <Calendar className="h-5 w-5 text-primary" />
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-sm">{event.title}</h4>
+                        <p className="text-xs text-gray-500">{event.date}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Clubs Section */}
+      <section id="clubs" className="py-20 px-4 bg-white">
+        <div className="container mx-auto">
+          <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-12">
+            University Clubs
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {clubs.map((club) => (
               <div 
-                key={announcement.title}
-                className="p-6 rounded-xl bg-white border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
+                key={club.id}
+                className="group bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow"
               >
-                <div className="flex items-start space-x-4">
-                  <Bell className="h-6 w-6 text-primary flex-shrink-0" />
-                  <div>
-                    <h3 className="text-lg font-semibold mb-2">{announcement.title}</h3>
-                    <p className="text-gray-600 mb-2">{announcement.description}</p>
-                    <span className="text-sm text-gray-500">{announcement.date}</span>
+                <div className="aspect-video w-full bg-primary-100 relative">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <club.icon className="h-12 w-12 text-primary-600" />
+                  </div>
+                </div>
+                <div className="p-6">
+                  <h3 className="font-semibold text-lg mb-2">{club.name}</h3>
+                  <p className="text-gray-600 text-sm mb-4">{club.description}</p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-500">
+                      <Users className="h-4 w-4 inline mr-1" />
+                      {club.members} members
+                    </span>
+                    <Button variant="outline" size="sm">Join Club</Button>
                   </div>
                 </div>
               </div>
@@ -143,54 +268,130 @@ const Index = () => {
   );
 };
 
-const features = [
+const announcements = [
   {
-    icon: MessageSquare,
-    title: "Discussion Forums",
-    description: "Engage in meaningful conversations with peers and faculty members in organized discussion threads."
+    id: 1,
+    category: "Academic",
+    title: "Final Exam Schedule Released",
+    description: "The final examination timetable for this semester has been published. Please check your student portal for your personal schedule.",
+    date: "2 hours ago",
+    icon: BookOpen,
+    categoryColor: "bg-blue-500",
+    categoryBadge: "bg-blue-100 text-blue-700"
   },
   {
-    icon: Users,
-    title: "Club Management",
-    description: "Join and manage university clubs, organize events, and connect with like-minded individuals."
-  },
-  {
+    id: 2,
+    category: "Event",
+    title: "Annual Tech Symposium 2024",
+    description: "Join us for the biggest tech event of the year. Register now to secure your spot and meet industry leaders.",
+    date: "1 day ago",
     icon: Calendar,
-    title: "Event Planning",
-    description: "Keep track of important dates, schedule meetings, and manage your academic calendar."
+    categoryColor: "bg-purple-500",
+    categoryBadge: "bg-purple-100 text-purple-700"
   },
   {
-    icon: Bell,
-    title: "Real-time Updates",
-    description: "Stay informed with instant notifications about announcements, events, and discussions."
-  },
-  {
-    icon: GraduationCap,
-    title: "Academic Resources",
-    description: "Access study materials, course information, and academic support tools."
+    id: 3,
+    category: "Administrative",
+    title: "New Library Access System",
+    description: "Starting next week, the library will implement a new digital access system. Please update your student ID.",
+    date: "2 days ago",
+    icon: ClipboardList,
+    categoryColor: "bg-green-500",
+    categoryBadge: "bg-green-100 text-green-700"
   }
 ];
 
-const announcements = [
+const todayClasses = [
   {
-    title: "New Course Registration Period",
-    description: "Course registration for the Spring semester opens next week. Check your portal for eligibility and time slots.",
-    date: "2 hours ago"
+    id: 1,
+    time: "9:00 AM",
+    subject: "Advanced Mathematics",
+    location: "Room 101, Science Building",
+    duration: "1h 30m"
   },
   {
-    title: "Tech Innovation Summit",
-    description: "Join us for the annual Technology Innovation Summit featuring industry leaders and workshops.",
-    date: "1 day ago"
+    id: 2,
+    time: "11:00 AM",
+    subject: "Computer Science",
+    location: "Lab 3, Tech Center",
+    duration: "2h"
   },
   {
-    title: "Library Extended Hours",
-    description: "The university library will extend its operating hours during the final examination period.",
-    date: "2 days ago"
+    id: 3,
+    time: "2:00 PM",
+    subject: "Physics Workshop",
+    location: "Physics Lab",
+    duration: "1h 30m"
   },
   {
-    title: "Campus Career Fair",
-    description: "Don't miss the upcoming Career Fair featuring top companies from various industries.",
-    date: "3 days ago"
+    id: 4,
+    time: "4:00 PM",
+    subject: "Study Group",
+    location: "Library, Room 2B",
+    duration: "1h"
+  }
+];
+
+const upcomingEvents = [
+  {
+    id: 1,
+    title: "Project Presentation",
+    date: "Tomorrow, 2:00 PM"
+  },
+  {
+    id: 2,
+    title: "Guest Lecture: AI Ethics",
+    date: "Wed, 11:00 AM"
+  },
+  {
+    id: 3,
+    title: "Club Meeting",
+    date: "Thu, 4:00 PM"
+  }
+];
+
+const clubs = [
+  {
+    id: 1,
+    name: "Tech Innovation Club",
+    description: "Explore cutting-edge technologies and work on innovative projects with like-minded peers.",
+    members: 156,
+    icon: GraduationCap
+  },
+  {
+    id: 2,
+    name: "Debate Society",
+    description: "Develop your public speaking skills and engage in thought-provoking discussions.",
+    members: 89,
+    icon: MessageSquare
+  },
+  {
+    id: 3,
+    name: "Sports Club",
+    description: "Stay active and participate in various sports activities and competitions.",
+    members: 234,
+    icon: Users
+  },
+  {
+    id: 4,
+    name: "Arts & Culture",
+    description: "Express your creativity and celebrate cultural diversity through various art forms.",
+    members: 167,
+    icon: UserPlus
+  },
+  {
+    id: 5,
+    name: "Environmental Society",
+    description: "Work towards a sustainable future through conservation projects and awareness campaigns.",
+    members: 123,
+    icon: Megaphone
+  },
+  {
+    id: 6,
+    name: "Career Development",
+    description: "Prepare for your professional journey with workshops, mentoring, and networking events.",
+    members: 198,
+    icon: CalendarDays
   }
 ];
 
